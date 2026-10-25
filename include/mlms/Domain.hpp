@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 struct ILatePenaltyStrategy {virtual ~ILatePenaltyStrategy()=default;virtual double penalty(int days,double maxMark)const=0;};
-struct StandardLatePenalty:ILatePenaltyStrategy {double penalty(int days,double maxMark)const override{return days>3?maxMark:days*0.1*maxMark;}};
+struct StandardLatePenalty:ILatePenaltyStrategy {double penalty(int days,double maxMark)const override{return days>3?maxMark:std::max(0,days)*0.1*maxMark;}};
 struct NoPenaltyStrategy:ILatePenaltyStrategy {double penalty(int,double)const override{return 0;}};
 struct Submission {int id,assignment,student;string status,submittedAt;double raw,finalMark,maxMark;};
 struct ISubmissionRepository {virtual ~ISubmissionRepository()=default;virtual Submission get(int)=0;};

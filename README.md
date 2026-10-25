@@ -82,3 +82,12 @@ The application now checks the authenticated account's role and active status **
 
 ## Phase 2 SRS reconciliation update
 See `SRS_TRACEABILITY.md` for a requirement-by-requirement mapping and known gaps. This revision adds Administrator user update, HoD audited mark adjustment, course-level bulk release, and corresponding automated regression tests. The supplied Phase 2 document does not specify MoSCoW labels, so none are invented.
+
+## Workflow rule updates
+- StandardLatePenalty: 10% of assignment maximum per started 24-hour period late (1–3), zero final mark after three periods. On-time: no penalty. The calculation uses UTC timestamps.
+- Lecturer may grant an individual extension later than the existing effective deadline. Students may submit late initially, but resubmission requires the effective deadline not to have passed.
+- Re-marking is restricted to work returned by the HoD; each mark entry/change produces an audit record.
+- HoD approval of returned work requires a subsequent lecturer audit entry. Only moderated results can be released. Other departments' HoDs cannot release the results.
+- New `tests/test_rules.cpp` exercises the policy boundaries and full submit -> extend -> resubmit -> mark -> return -> re-mark -> approve -> release sequence.
+
+Note: The project still records a local file path rather than copying submission bytes into managed persistent storage. This must be addressed before claiming full compliance with the SRS's secure submission storage requirement.
