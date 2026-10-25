@@ -9,7 +9,7 @@
 #include <cmath>
 using namespace std;
 class LMS {
- DB& d;SubmissionRepository submissions;StandardLatePenalty policy;
+ DB& d;std::unique_ptr<ISubmissionRepository> ownedRepository;ISubmissionRepository& submissions;const ILatePenaltyStrategy& policy;
  void roleRequired(int uid,const string& role);
  bool exists(const string& sql,int a,int b=-1);
  void audit(int sid,int uid,double oldMark,double newMark,const string& why,bool hasOld);
@@ -19,6 +19,7 @@ class LMS {
  int lateDays(const string& submitted,const string& deadline);
 public:
  explicit LMS(DB& db);
+ LMS(DB& db,ISubmissionRepository& repository,const ILatePenaltyStrategy& penalty);
  unique_ptr<User> login(const string& name,const string& pw);
  void bootstrap();
  void createDepartment(int uid);

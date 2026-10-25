@@ -17,7 +17,10 @@ pair<string,double> LMS::deadlineAndMax(int aid,int sid){Statement q(d,"SELECT C
 
 int LMS::lateDays(const string& submitted,const string& deadline){double sec=difftime(parseTime(submitted),parseTime(deadline));return sec<=0?0:(int)ceil(sec/86400.0);}
 
-LMS::LMS(DB& db):d(db),submissions(db){}
+namespace { const StandardLatePenalty defaultPenalty; }
+LMS::LMS(DB& db):d(db),ownedRepository(std::make_unique<SubmissionRepository>(db)),submissions(*ownedRepository),policy(defaultPenalty){}
+LMS::LMS(DB& db,ISubmissionRepository& repository,const ILatePenaltyStrategy& penaltyStrategy)
+ :d(db),submissions(repository),policy(penaltyStrategy){}
 
 unique_ptr<User> LMS::login(const string& name,const string& pw){Statement q(d,"SELECT user_id,password_hash,salt,role FROM User WHERE username=? AND active=1");q.bind(1,name);require(q.next(),"Invalid login");require(constantEqual(passwordHash(pw,q.str(2)),q.str(1)),"Invalid login");return UserFactory::create(q.integer(0),name,q.str(3));}
 
