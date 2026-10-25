@@ -1,6 +1,6 @@
 #pragma once
 #include "mlms/User.hpp"
-#include "mlms/Database.hpp"
+#include "mlms/DataAccess.hpp"
 #include "mlms/Utility.hpp"
 #include "mlms/Domain.hpp"
 #include <fstream>
@@ -9,9 +9,9 @@
 #include <cmath>
 using namespace std;
 class LMS {
- DB& d;std::unique_ptr<ISubmissionRepository> ownedRepository;ISubmissionRepository& submissions;const ILatePenaltyStrategy& policy;
+ DataAccess store;std::unique_ptr<ISubmissionRepository> ownedRepository;ISubmissionRepository& submissions;const ILatePenaltyStrategy& policy;
  void roleRequired(int uid,const string& role);
- bool exists(const string& sql,int a,int b=-1);
+ bool exists(SqlId sql,int a,int b=-1);
  void audit(int sid,int uid,double oldMark,double newMark,const string& why,bool hasOld);
  void lecturerOwns(int uid,int assignment);
  void hodOwns(int uid,int assignment);
