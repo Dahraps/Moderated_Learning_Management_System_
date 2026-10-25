@@ -40,3 +40,12 @@ add_test(NAME mlms_pattern_tests COMMAND mlms_pattern_tests)
 add_executable(mlms_password_security_tests tests/test_password_security.cpp)
 target_link_libraries(mlms_password_security_tests PRIVATE mlms_core)
 add_test(NAME mlms_password_security_tests COMMAND mlms_password_security_tests)
+
+add_executable(mlms_audit_tests tests/test_audit.cpp)
+target_link_libraries(mlms_audit_tests PRIVATE mlms_core)
+add_test(NAME mlms_audit_tests COMMAND mlms_audit_tests)
+set_tests_properties(mlms_audit_tests PROPERTIES WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_executable(mlms_validation_tests tests/test_validation.cpp)
+target_link_libraries(mlms_validation_tests PRIVATE mlms_core)
+add_test(NAME mlms_validation_tests COMMAND mlms_validation_tests)

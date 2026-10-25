@@ -43,5 +43,6 @@ public:
  void moderate(int uid);
  void release(int uid);
  void results(int sid);
+ void viewMarkAudit(int uid);
 
 };

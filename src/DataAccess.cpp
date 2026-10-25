@@ -53,6 +53,8 @@ const char* sqlFor(SqlId id){
  case SqlId::Q46: return "SELECT 1 FROM User WHERE user_id=?";
  case SqlId::Q47: return "SELECT 1 FROM Department WHERE department_id=?";
  case SqlId::Q48: return "SELECT 1 FROM Course c JOIN User u ON u.department_id=c.department_id WHERE u.user_id=? AND c.course_id=? AND u.role='HoD'";
+ case SqlId::Q49: return "SELECT 1 FROM User WHERE user_id=? AND role='Administrator' AND active=1";
+ case SqlId::Q50: return "SELECT ma.audit_id,u.username,ma.changed_by,ma.changed_at,ma.old_mark,ma.new_mark,ma.reason FROM MarkAudit ma JOIN User u ON u.user_id=ma.changed_by WHERE ma.submission_id=? ORDER BY ma.audit_id";
  default:throw std::runtime_error("Unknown query");
  }
 }
