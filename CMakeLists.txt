@@ -36,3 +36,7 @@ set_tests_properties(mlms_rule_tests PROPERTIES WORKING_DIRECTORY ${CMAKE_CURREN
 add_executable(mlms_pattern_tests tests/test_patterns.cpp)
 target_link_libraries(mlms_pattern_tests PRIVATE mlms_core)
 add_test(NAME mlms_pattern_tests COMMAND mlms_pattern_tests)
+
+add_executable(mlms_password_security_tests tests/test_password_security.cpp)
+target_link_libraries(mlms_password_security_tests PRIVATE mlms_core)
+add_test(NAME mlms_password_security_tests COMMAND mlms_password_security_tests)
