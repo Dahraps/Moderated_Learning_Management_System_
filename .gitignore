@@ -4,3 +4,5 @@ mlms.db
 *.db-wal
 *.db-shm
 .vscode/
+build-release/
+compile_commands.json

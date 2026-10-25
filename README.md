@@ -91,3 +91,19 @@ See `SRS_TRACEABILITY.md` for a requirement-by-requirement mapping and known gap
 - New `tests/test_rules.cpp` exercises the policy boundaries and full submit -> extend -> resubmit -> mark -> return -> re-mark -> approve -> release sequence.
 
 Note: The project still records a local file path rather than copying submission bytes into managed persistent storage. This must be addressed before claiming full compliance with the SRS's secure submission storage requirement.
+
+## Verified CMake build and coding standard
+
+The project uses CMake 3.16+, ISO C++17, SQLite3, and OpenSSL. See `CODING_STANDARD.md` for naming, formatting, error handling, RAII, testing, and review rules; see `.clang-format` for formatting defaults.
+
+Portable build commands:
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --parallel 2
+ctest --test-dir build --output-on-failure
+```
+
+On Linux/macOS with Unix Makefiles, optional presets are available: `cmake --preset debug`, `cmake --build --preset debug`, and `ctest --preset debug`. On Windows, prefer the portable commands with a generator suitable for your installed compiler and dependencies.
+
+Run from the project root so the program can find `sql/schema.sql` and persist `mlms.db` there. Do not commit database files or build artifacts.
