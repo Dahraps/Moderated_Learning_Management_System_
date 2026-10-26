@@ -1,5 +1,0 @@
-# Mark audit implementation
-
-Every initial lecturer mark, lecturer correction following returned moderation, and HoD mark adjustment inserts a `MarkAudit` record containing `submission_id`, `changed_by`, `old_mark`, `new_mark`, `reason`, and `changed_at` (UTC). The initial mark has a NULL old value. All mark updates and their audit inserts run inside the same SQLite transaction, rolling back together on failure. Audit history can be viewed from Administrator (menu 10), Lecturer (menu 6), or HoD (menu 7); lecturer access is restricted to assigned courses and HoD access to their department. Students cannot access audit records.
-
-**Scope:** The audit stores final marks before and after penalties, not separate raw-mark values. A raw mark can change while the final mark remains zero for work more than three days late; the event is still logged. The current schema does not enforce append-only audit rows against direct database access by privileged operators. For deployment, restrict file access and consider additional database triggers or an external append-only log.
