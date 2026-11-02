@@ -1,8 +1,21 @@
 cmake_minimum_required(VERSION 3.16)
 project(MLMS VERSION 1.0 LANGUAGES CXX)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+option(MLMS_ENABLE_COVERAGE "Enable GCC/Clang coverage instrumentation" OFF)
+
+if(MLMS_ENABLE_COVERAGE)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        add_compile_options(--coverage -O0 -g)
+        add_link_options(--coverage)
+    else()
+        message(FATAL_ERROR "MLMS_ENABLE_COVERAGE currently supports GCC or Clang")
+    endif()
+endif()
+
 find_package(SQLite3 REQUIRED)
 find_package(OpenSSL REQUIRED)
 add_library(mlms_core src/LMS.cpp src/Console.cpp src/User.cpp src/SubmissionRepository.cpp src/DataAccess.cpp)
