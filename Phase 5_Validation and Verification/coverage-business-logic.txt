@@ -1,0 +1,12 @@
+Business-logic line coverage baseline (existing 8 CTest programs; GCC 14.2.0, Linux)
+
+src/LMS.cpp:                       92 / 117 = 78.63%
+src/User.cpp:                      10 / 10  = 100.00%
+src/SubmissionRepository.cpp:       5 / 5   = 100.00%
+src/DataAccess.cpp:                 35 / 63  = 55.56%
+include/mlms/PenaltyStrategy.hpp:    5 / 6   = 83.33%
+
+TOTAL:                            147 / 201 = 73.13%
+TARGET: at least 70% line coverage
+
+Execution evidence: all 8 existing CTest programs passed. The GoogleTest suite and GitHub Actions workflow were added but not executed in this environment because GitHub could not be reached to download GoogleTest. The CI-generated report must be retained after the workflow runs.
