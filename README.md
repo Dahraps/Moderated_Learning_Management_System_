@@ -107,3 +107,7 @@ ctest --test-dir build --output-on-failure
 On Linux/macOS with Unix Makefiles, optional presets are available: `cmake --preset debug`, `cmake --build --preset debug`, and `ctest --preset debug`. On Windows, prefer the portable commands with a generator suitable for your installed compiler and dependencies.
 
 Run from the project root so the program can find `sql/schema.sql` and persist `mlms.db` there. Do not commit database files or build artifacts.
+
+## 📹 Project Presentation Video
+Due to repository file size limits, the high-fidelity demonstration video can be viewed here:
+👉 [Watch MLMS Presentation Video (Google Drive)](https://drive.google.com/file/d/1uSYhNratTlJvmo_SMo31_RC_AO7vDLcA/view?usp=drive_link)
