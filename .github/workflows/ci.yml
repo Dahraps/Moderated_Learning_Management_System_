@@ -1,0 +1,42 @@
+name: C++ Tests and Coverage
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install build and coverage dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ libsqlite3-dev libssl-dev gcovr
+
+      - name: Configure with GoogleTest and coverage
+        run: cmake -S . -B build-ci -DCMAKE_BUILD_TYPE=Debug -DMLMS_ENABLE_GTEST=ON -DMLMS_ENABLE_COVERAGE=ON
+
+      - name: Build all targets
+        run: cmake --build build-ci --parallel 2
+
+      - name: Run unit and integration tests
+        run: ctest --test-dir build-ci --output-on-failure
+
+      - name: Generate business-logic line coverage report
+        run: |
+          gcovr --root . --filter 'src/(LMS|User|SubmissionRepository|DataAccess)\.cpp$|include/mlms/PenaltyStrategy\.hpp$' --print-summary --xml-pretty --output coverage.xml --fail-under-line 70
+          gcovr --root . --filter 'src/(LMS|User|SubmissionRepository|DataAccess)\.cpp$|include/mlms/PenaltyStrategy\.hpp$' --txt coverage-business-logic.txt
+          cat coverage-business-logic.txt
+
+      - name: Upload coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlms-test-and-coverage-reports
+          path: |
+            coverage.xml
+            coverage-business-logic.txt
